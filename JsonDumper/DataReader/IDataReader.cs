@@ -1,4 +1,4 @@
-﻿using JsonDumper.GameData;
+﻿using JsonDumper.ExportData;
 
 namespace JsonDumper.DataReader;
 

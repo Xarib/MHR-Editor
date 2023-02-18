@@ -95,7 +95,7 @@ public static class DataInit {
         return JsonConvert.DeserializeObject<List<T>>(json);
     }
 
-    private static Dictionary<K, V> LoadDict<K, V>(byte[] data) {
+    public static Dictionary<K, V> LoadDict<K, V>(byte[] data) {
         var json = Encoding.UTF8.GetString(data);
         return JsonConvert.DeserializeObject<Dictionary<K, V>>(json);
     }

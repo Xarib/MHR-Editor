@@ -1,4 +1,4 @@
-﻿namespace JsonDumper.GameData;
+﻿namespace JsonDumper.ExportData;
 
 public interface IGameData
 {
