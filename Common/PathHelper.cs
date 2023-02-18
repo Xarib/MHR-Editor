@@ -3,11 +3,11 @@
 namespace MHR_Editor.Common;
 
 public static class PathHelper {
-    public const string CHUNK_PATH       = @"V:\MHR\re_chunk_000";
-    public const string ENUM_HEADER_PATH = @"C:\SteamLibrary\common\MonsterHunterRise\Enums_Internal.hpp";
-    public const string STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";
-    public const string WIKI_PATH        = @"R:\Games\Monster Hunter Rise\Wiki Dump";
-    public const string MODS_PATH        = @"R:\Games\Monster Hunter Rise\Mods";
+    public const string CHUNK_PATH       = @"D:\mhr_mod\unpack\re_chunk_000";
+    public const string ENUM_HEADER_PATH = @"D:\Git\MHR-Editor\TypeGeneration\Enums_Internal.hpp";
+    public const string STRUCT_JSON_PATH = @"D:\Git\MHR-Editor\TypeGeneration\rszmhrise.json";
+    public const string WIKI_PATH        = @"D:\Git\MHR-Editor\PutThatThere\Wiki Dump";
+    public const string MODS_PATH        = @"D:\Git\MHR-Editor\PutThatThere\Mods";
     public const string FLUFFY_MODS_PATH = @"R:\Games\Monster Hunter Rise\modmanager\Games\MHRISE\Mods";
     public const string RAR_SCRIPT       = @"/mnt/r/Games/Monster\ Hunter\ Rise/MHR-Editor/compress-rar.sh";
 
