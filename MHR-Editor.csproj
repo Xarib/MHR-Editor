@@ -42,6 +42,7 @@
 		<Compile Remove="Generator\**"/>
 		<Compile Remove="ID-Parser\**"/>
 		<Compile Remove="Tests\**"/>
+		<Compile Remove="JsonDumper\**"/>
 		<EmbeddedResource Remove="Common\**"/>
 		<EmbeddedResource Remove="Data-Helper-Extractor\**"/>
 		<EmbeddedResource Remove="Generated\**"/>
