@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Common.Models.List_Wrappers;
+using MHR_Editor.Models.Enums;
 
 namespace JsonDumper.DataReader;
 
@@ -23,6 +24,9 @@ public static class ReaderHelper
             yield return instance;
         }
     }
+
+    public static int ConvertRarity(Snow_data_DataDef_RareTypes  rarity)
+        => ((int)rarity) + 1;
 
     public static IEnumerable<int> ConvertRampageSlots(ObservableCollection<GenericWrapper<uint>> slots)
     {

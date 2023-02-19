@@ -16,6 +16,6 @@ public class GreatSword : IGameData, IAttack, ICriticalRate, IDefenseBonus, IRam
     public IList<int> Handicraft { get; set; }
     public IList<int> Slots { get; set; }
     public WeaponElement? WeaponElement { get; set; }
-    public Snow_data_DataDef_RareTypes Rarity { get; set; }
+    public int Rarity { get; set; }
     public string Name { get; set; }
 }

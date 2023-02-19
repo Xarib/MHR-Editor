@@ -12,7 +12,7 @@ public class Bow : IGameData, IAttack, ICriticalRate, IDefenseBonus, IRampageSlo
     public IList<int> RampageSlots { get; set; }
     public IList<int> Slots { get; set; }
     public WeaponElement? WeaponElement { get; set; }
-    public Snow_data_DataDef_RareTypes Rarity { get; set; }
+    public int Rarity { get; set; }
     public string Name { get; set; }
     public IList<Coating> Coatings { get; set; }
     public int MaxChargeLevel { get; set; }

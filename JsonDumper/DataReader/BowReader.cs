@@ -21,7 +21,7 @@ public class BowReader : IDataReader
                 Attack = bow.Atk,
                 Id = bow.Id,
                 CriticalRate = bow.CriticalRate,
-                Rarity = bow.RareType,
+                Rarity = ReaderHelper.ConvertRarity(bow.RareType),
                 Slots = ReaderHelper.ConvertSlots(bow.SlotNumList).ToList(),
                 DefenseBonus = bow.DefBonus,
                 Name = DataHelper.WEAPON_NAME_LOOKUP[Global.LangIndex.eng][bow.Id],
@@ -45,7 +45,7 @@ public class BowReader : IDataReader
         [Snow_data_BowWeaponBaseData_ChageStartLvTypes.Lv4] = 4,
         [Snow_data_BowWeaponBaseData_ChageStartLvTypes.Max] = 4,
     };
-
+    
     private static Dictionary<Snow_data_BowWeaponBaseData_ChargeTypes, Charge?> CHARGE_TYPE_MAPPING = new()
     {
         [Snow_data_BowWeaponBaseData_ChargeTypes.None] = null,

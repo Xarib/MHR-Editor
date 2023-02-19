@@ -21,7 +21,7 @@ public class GreatSwordReader : IDataReader
                 Handicraft = ReaderHelper.ConvertHandicraft(greatSword.TakumiValList).ToList(),
                 Id = greatSword.Id,
                 CriticalRate = greatSword.CriticalRate,
-                Rarity = greatSword.RareType,
+                Rarity = ReaderHelper.ConvertRarity(greatSword.RareType),
                 Slots = ReaderHelper.ConvertSlots(greatSword.SlotNumList).ToList(),
                 DefenseBonus = greatSword.DefBonus,
                 Name = DataHelper.WEAPON_NAME_LOOKUP[Global.LangIndex.eng][greatSword.Id],

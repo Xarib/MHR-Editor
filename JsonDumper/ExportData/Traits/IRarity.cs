@@ -4,5 +4,5 @@ namespace JsonDumper.ExportData.Traits;
 
 public interface IRarity
 {
-    public Snow_data_DataDef_RareTypes Rarity { get; set; }
+    public int Rarity { get; set; }
 }
