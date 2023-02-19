@@ -9,11 +9,15 @@ DataInit.Init();
 
 const string FILE_PATH = @"D:\dump.json";
 
+File.Delete(FILE_PATH);
+
 var dataReaders = new List<IDataReader>()
 {
-    //new GreatSwordReader(),
     //new BowReader(),
-    new ChargeAxeReader(),
+    //new ChargeAxeReader(),
+    //new GreatSwordReader(),
+    //new DualBladesReader(),
+    new GunLanceReader(),
 };
 
 var dataDump = new Dictionary<long, object>();

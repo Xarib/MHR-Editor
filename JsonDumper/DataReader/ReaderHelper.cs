@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
+using JsonDumper.ExportData;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Common.Models.List_Wrappers;
@@ -27,6 +28,14 @@ public static class ReaderHelper
 
     public static int ConvertRarity(Snow_data_DataDef_RareTypes  rarity)
         => ((int)rarity) + 1;
+
+    public static WeaponElement? ConvertWeaponElement(Snow_equip_PlWeaponElementTypes element, int value)
+    {
+        if (element == Snow_equip_PlWeaponElementTypes.None)
+            return null;
+
+        return new WeaponElement(element, value);
+    }
 
     public static IEnumerable<int> ConvertRampageSlots(ObservableCollection<GenericWrapper<uint>> slots)
     {

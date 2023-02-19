@@ -26,9 +26,7 @@ public class ChargeAxeReader : IDataReader
                 DefenseBonus = cb.DefBonus,
                 Name = DataHelper.WEAPON_NAME_LOOKUP[Global.LangIndex.eng][cb.Id],
                 PhialType = cb.ChargeAxeBottleType,
-                WeaponElement = cb.MainElementType == Snow_equip_PlWeaponElementTypes.None
-                    ? null
-                    : new WeaponElement(cb.MainElementType, cb.MainElementVal)
+                WeaponElement = ReaderHelper.ConvertWeaponElement(cb.MainElementType, cb.MainElementVal),
             });
     }
 }

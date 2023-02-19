@@ -13,21 +13,19 @@ public class GreatSwordReader : IDataReader
         return ReaderHelper
             .GetWeaponData<Snow_equip_GreatSwordBaseUserData_Param>(nameof(GreatSword))
             .Where(gs => gs.Atk != 0)
-            .Select(greatSword => new GreatSword()
+            .Select(gs => new GreatSword()
             {
-                RampageSlots = ReaderHelper.ConvertRampageSlots(greatSword.HyakuryuSlotNumList).ToList(),
-                Attack = greatSword.Atk,
-                Sharpness = ReaderHelper.ConvertSharpness(greatSword.SharpnessValList).ToList(),
-                Handicraft = ReaderHelper.ConvertHandicraft(greatSword.TakumiValList).ToList(),
-                Id = greatSword.Id,
-                CriticalRate = greatSword.CriticalRate,
-                Rarity = ReaderHelper.ConvertRarity(greatSword.RareType),
-                Slots = ReaderHelper.ConvertSlots(greatSword.SlotNumList).ToList(),
-                DefenseBonus = greatSword.DefBonus,
-                Name = DataHelper.WEAPON_NAME_LOOKUP[Global.LangIndex.eng][greatSword.Id],
-                WeaponElement = greatSword.MainElementType == Snow_equip_PlWeaponElementTypes.None
-                    ? null
-                    : new WeaponElement(greatSword.MainElementType, greatSword.MainElementVal)
+                RampageSlots = ReaderHelper.ConvertRampageSlots(gs.HyakuryuSlotNumList).ToList(),
+                Attack = gs.Atk,
+                Sharpness = ReaderHelper.ConvertSharpness(gs.SharpnessValList).ToList(),
+                Handicraft = ReaderHelper.ConvertHandicraft(gs.TakumiValList).ToList(),
+                Id = gs.Id,
+                CriticalRate = gs.CriticalRate,
+                Rarity = ReaderHelper.ConvertRarity(gs.RareType),
+                Slots = ReaderHelper.ConvertSlots(gs.SlotNumList).ToList(),
+                DefenseBonus = gs.DefBonus,
+                Name = DataHelper.WEAPON_NAME_LOOKUP[Global.LangIndex.eng][gs.Id],
+                WeaponElement = ReaderHelper.ConvertWeaponElement(gs.MainElementType, gs.MainElementVal),
             });
     }
 }

@@ -31,9 +31,7 @@ public class BowReader : IDataReader
                     .Where(charge => charge is not null)
                     .ToList(),
                 Coatings = ConvertCoatings(bow.BowBottleEquipFlagList, bow.BowBottlePowerUpTypeList).ToList(),
-                WeaponElement = bow.MainElementType == Snow_equip_PlWeaponElementTypes.None
-                    ? null
-                    : new WeaponElement(bow.MainElementType, bow.MainElementVal)
+                WeaponElement = ReaderHelper.ConvertWeaponElement(bow.MainElementType, bow.MainElementVal),
             });
     }
 
