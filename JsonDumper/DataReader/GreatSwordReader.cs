@@ -10,9 +10,10 @@ public class GreatSwordReader : IDataReader
 {
     public IEnumerable<IGameData> GetData()
     {
-        foreach (var greatSword in ReaderHelper.GetWeaponData<Snow_equip_GreatSwordBaseUserData_Param>(nameof(GreatSword)).Where(gs => gs.Atk != 0))
-        {
-            yield return new GreatSword()
+        return ReaderHelper
+            .GetWeaponData<Snow_equip_GreatSwordBaseUserData_Param>(nameof(GreatSword))
+            .Where(gs => gs.Atk != 0)
+            .Select(greatSword => new GreatSword()
             {
                 RampageSlots = ReaderHelper.ConvertRampageSlots(greatSword.HyakuryuSlotNumList).ToList(),
                 Attack = greatSword.Atk,
@@ -24,11 +25,9 @@ public class GreatSwordReader : IDataReader
                 Slots = ReaderHelper.ConvertSlots(greatSword.SlotNumList).ToList(),
                 DefenseBonus = greatSword.DefBonus,
                 Name = DataHelper.WEAPON_NAME_LOOKUP[Global.LangIndex.eng][greatSword.Id],
-                WeaponElement = greatSword.MainElementType == Snow_equip_PlWeaponElementTypes.None ? 
-                    null 
-                    :
-                    new WeaponElement(greatSword.MainElementType, greatSword.MainElementVal)
-            };
-        }
+                WeaponElement = greatSword.MainElementType == Snow_equip_PlWeaponElementTypes.None
+                    ? null
+                    : new WeaponElement(greatSword.MainElementType, greatSword.MainElementVal)
+            });
     }
 }

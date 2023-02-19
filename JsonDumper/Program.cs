@@ -11,7 +11,8 @@ const string FILE_PATH = @"D:\dump.json";
 
 var dataReaders = new List<IDataReader>()
 {
-    new GreatSwordReader(),
+    //new GreatSwordReader(),
+    new BowReader(),
 };
 
 var dataDump = new Dictionary<long, object>();
