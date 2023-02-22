@@ -62,7 +62,7 @@ public static class AmmoHelper
         [51] = (AmmoType.Unknown, null),
     };
 
-    public static IEnumerable<Magazine> ConvertMagazines(
+    public static IEnumerable<HeavyBowgunMagazine> ConvertMagazines(
         ObservableCollection<GenericWrapper<bool>> bulletType,
         ObservableCollection<GenericWrapper<uint>> capacity,
         ObservableCollection<GenericWrapper<Snow_data_GameItemEnum_ShootType>> shootType
@@ -78,7 +78,7 @@ public static class AmmoHelper
             if (ammoType == AmmoType.Unknown)
                 continue;
 
-            yield return new Magazine()
+            yield return new HeavyBowgunMagazine()
             {
                 AmmoSize = ammoSize,
                 AmmoType = ammoType,
@@ -87,14 +87,53 @@ public static class AmmoHelper
             };
         }
     }
+    public static IEnumerable<LightBowgunMagazine> ConvertMagazines(
+        ObservableCollection<GenericWrapper<bool>> bulletType,
+        ObservableCollection<GenericWrapper<uint>> capacity,
+        ObservableCollection<GenericWrapper<Snow_data_GameItemEnum_ShootType>> shootType,
+        ObservableCollection<GenericWrapper<Snow_data_GameItemEnum_BulletType>> rapidShotList
+        )
+    {
+        var rapidShotAmmo = rapidShotList
+            .Select(wr => (int)wr.Value)
+            .ToHashSet();
+        
+        for (var i = 0; i < bulletType.Count; i++)
+        {
+            if (!bulletType[i].Value)
+                continue;
+            
+            var (ammoType, ammoSize) = AMMO_TYPE_INDEX_MAP[i];
+            
+            if (ammoType == AmmoType.Unknown)
+                continue;
+
+            yield return new LightBowgunMagazine()
+            {
+                AmmoSize = ammoSize,
+                AmmoType = ammoType,
+                Capacity = capacity[i].Value,
+                ShootType = shootType[i].Value,
+                Rapid = rapidShotAmmo.Contains(i),
+            };
+        }
+    }
 }
 
-public class Magazine
+public class HeavyBowgunMagazine
 {
     public AmmoType AmmoType { get; set; }
     public int? AmmoSize { get; set; }
     public uint Capacity { get; set; }
     public Snow_data_GameItemEnum_ShootType ShootType { get; set; }
+}
+public class LightBowgunMagazine
+{
+    public AmmoType AmmoType { get; set; }
+    public int? AmmoSize { get; set; }
+    public uint Capacity { get; set; }
+    public Snow_data_GameItemEnum_ShootType ShootType { get; set; }
+    public bool Rapid { get; set; }
 }
 
 public enum AmmoType
