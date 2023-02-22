@@ -5,7 +5,11 @@ using JsonDumper.DataReader;
 using MHR_Editor.Data;
 
 // This is a need hidden dependency
+Console.WriteLine("Start init...");
 DataInit.Init();
+Console.WriteLine("Done init");
+
+Console.WriteLine("Dumping json...");
 
 const string FILE_PATH = @"D:\dump.json";
 
@@ -19,7 +23,10 @@ var dataReaders = new List<IDataReader>()
     //new DualBladesReader(),
     //new GunLanceReader(),
     //new HammerReader(),
-    new HeavyBowgunReader(),
+    //new HeavyBowgunReader(),
+    //new HornReader(),
+    //new InsectGlaiveReader(),
+    new LanceReader(),
 };
 
 var dataDump = new Dictionary<long, object>();
