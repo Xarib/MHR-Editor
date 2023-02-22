@@ -22,6 +22,16 @@ public class HeavyBowgunReader : IDataReader
                 Slots = ReaderHelper.ConvertSlots(hb.SlotNumList).ToList(),
                 DefenseBonus = hb.DefBonus,
                 Name = DataHelper.WEAPON_NAME_LOOKUP[Global.LangIndex.eng][hb.Id],
+                Magazines = AmmoHelper.ConvertMagazines(
+                    hb.BulletEquipFlagList,
+                    hb.BulletNumList,
+                    hb.BulletTypeList
+                    ).ToList(),
+                Recoil = hb.Recoil,
+                SpecialAmmo = hb.HeavyBowgunUniqueBulletType,
+                Fluctuation = hb.Fluctuation,
+                Reload = hb.Reload,
+                ClusterBombType = hb.KakusanType,
             });
     }
 }

@@ -18,7 +18,8 @@ var dataReaders = new List<IDataReader>()
     //new GreatSwordReader(),
     //new DualBladesReader(),
     //new GunLanceReader(),
-    new HammerReader(),
+    //new HammerReader(),
+    new HeavyBowgunReader(),
 };
 
 var dataDump = new Dictionary<long, object>();

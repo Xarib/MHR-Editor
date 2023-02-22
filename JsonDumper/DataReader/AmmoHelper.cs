@@ -1,4 +1,8 @@
-﻿namespace JsonDumper.DataReader;
+﻿using System.Collections.ObjectModel;
+using MHR_Editor.Common.Models.List_Wrappers;
+using MHR_Editor.Models.Enums;
+
+namespace JsonDumper.DataReader;
 
 public static class AmmoHelper
 {
@@ -57,6 +61,40 @@ public static class AmmoHelper
         [50] = (AmmoType.Unknown, null),
         [51] = (AmmoType.Unknown, null),
     };
+
+    public static IEnumerable<Magazine> ConvertMagazines(
+        ObservableCollection<GenericWrapper<bool>> bulletType,
+        ObservableCollection<GenericWrapper<uint>> capacity,
+        ObservableCollection<GenericWrapper<Snow_data_GameItemEnum_ShootType>> shootType
+        )
+    {
+        for (var i = 0; i < bulletType.Count; i++)
+        {
+            if (!bulletType[i].Value)
+                continue;
+            
+            var (ammoType, ammoSize) = AMMO_TYPE_INDEX_MAP[i];
+            
+            if (ammoType == AmmoType.Unknown)
+                continue;
+
+            yield return new Magazine()
+            {
+                AmmoSize = ammoSize,
+                AmmoType = ammoType,
+                Capacity = capacity[i].Value,
+                ShootType = shootType[i].Value,
+            };
+        }
+    }
+}
+
+public class Magazine
+{
+    public AmmoType AmmoType { get; set; }
+    public int? AmmoSize { get; set; }
+    public uint Capacity { get; set; }
+    public Snow_data_GameItemEnum_ShootType ShootType { get; set; }
 }
 
 public enum AmmoType
