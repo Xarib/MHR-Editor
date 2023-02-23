@@ -31,6 +31,7 @@ var dataReaders = new List<IDataReader>()
     //new LongSwordReader(),
     //new ShortSwordReader(),
     //new InsectReader(),
+    new ArmorReader(),
 };
 
 var dataDump = new Dictionary<long, object>();
