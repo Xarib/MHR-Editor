@@ -1,4 +1,5 @@
-﻿using JsonDumper.DataReader;
+﻿using System.Text.Json.Serialization;
+using JsonDumper.DataReader;
 using JsonDumper.ExportData.Traits;
 using MHR_Editor.Models.Enums;
 
@@ -6,6 +7,7 @@ namespace JsonDumper.ExportData;
 
 public class LightBowgun : IGameData, IAttack, ICriticalRate, IDefenseBonus, IRampageSlots, ISlots, IRarity, IName, IGun
 {
+    [JsonIgnore]
     public long Id { get; init; }
     public int Attack { get; set; }
     public int CriticalRate { get; set; }

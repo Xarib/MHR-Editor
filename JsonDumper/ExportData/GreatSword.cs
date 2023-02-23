@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using JsonDumper.ExportData.Traits;
-using MHR_Editor.Models.Enums;
 
 namespace JsonDumper.ExportData;
 

@@ -1,10 +1,11 @@
-﻿using JsonDumper.ExportData.Traits;
-using MHR_Editor.Models.Enums;
+﻿using System.Text.Json.Serialization;
+using JsonDumper.ExportData.Traits;
 
 namespace JsonDumper.ExportData;
 
 public class Bow : IGameData, IAttack, ICriticalRate, IDefenseBonus, IRampageSlots, ISlots, IWeaponElement, IRarity, IName
 {
+    [JsonIgnore]
     public long Id { get; init; }
     public int Attack { get; set; }
     public int CriticalRate { get; set; }

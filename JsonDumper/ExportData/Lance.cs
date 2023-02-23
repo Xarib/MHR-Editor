@@ -1,9 +1,11 @@
-﻿using JsonDumper.ExportData.Traits;
+﻿using System.Text.Json.Serialization;
+using JsonDumper.ExportData.Traits;
 
 namespace JsonDumper.ExportData;
 
 public class Lance : IGameData, IAttack, ICriticalRate, IDefenseBonus, IRampageSlots, ISharpness, ISlots, IWeaponElement, IRarity, IName
 {
+    [JsonIgnore]
     public long Id { get; init; }
     public int Attack { get; set; }
     public int CriticalRate { get; set; }

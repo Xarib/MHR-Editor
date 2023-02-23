@@ -1,10 +1,12 @@
-﻿using JsonDumper.ExportData.Traits;
+﻿using System.Text.Json.Serialization;
+using JsonDumper.ExportData.Traits;
 using MHR_Editor.Models.Enums;
 
 namespace JsonDumper.ExportData;
 
 public class Insect : IGameData, IRarity, IName
 {
+    [JsonIgnore]
     public long Id { get; init; }
     public int Rarity { get; set; }
     public string Name { get; set; }
