@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using JsonDumper.ExportData;
+using JsonDumper.ExportData.Traits;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Data;
 using MHR_Editor.Common.Models;
@@ -30,25 +31,7 @@ public class ArmorReader : IDataReader
                 IceResistance = armor.IceRegVal,
                 ThunderResistance = armor.ThunderRegVal,
                 DragonResistance = armor.DragonRegVal,
-                Skills = ConvertSkill(armor.SkillList, armor.SkillLvList).ToList(),
+                Skills = ReaderHelper.ConvertSkill(armor.SkillList, armor.SkillLvList).ToList(),
             });
-    }
-
-    private static IEnumerable<Skill> ConvertSkill(ObservableCollection<DataSourceWrapper<byte>> skillId,
-        ObservableCollection<GenericWrapper<int>> skillLevel)
-    {
-        for (var i = 0; i < skillId.Count; i++)
-        {
-            var id = skillId[i].Value;
-            
-            if (id == 0)
-                continue;
-
-            yield return new Skill()
-            {
-                Id = id,
-                Level = skillLevel[i].Value,
-            };
-        }
     }
 }

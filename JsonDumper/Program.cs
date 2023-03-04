@@ -11,43 +11,60 @@ Console.WriteLine("Done init");
 
 Console.WriteLine("Dumping json...");
 
-const string FILE_PATH = @"D:\dump.json";
-
-File.Delete(FILE_PATH);
-
 var dataReaders = new List<IDataReader>()
 {
-    //new BowReader(),
-    //new ChargeAxeReader(),
-    //new GreatSwordReader(),
-    //new DualBladesReader(),
-    //new GunLanceReader(),
-    //new HammerReader(),
-    //new HeavyBowgunReader(),
-    //new HornReader(),
-    //new InsectGlaiveReader(),
-    //new LanceReader(),
-    //new LightBowgunReader(),
-    //new LongSwordReader(),
-    //new ShortSwordReader(),
+    new BowReader(),
+    new ChargeAxeReader(),
+    new GreatSwordReader(),
+    new DualBladesReader(),
+    new GunLanceReader(),
+    new HammerReader(),
+    new HeavyBowgunReader(),
+    new HornReader(),
+    new InsectGlaiveReader(),
+    new LanceReader(),
+    new LightBowgunReader(),
+    new LongSwordReader(),
+    new ShortSwordReader(),
     new SlashAxeReader(),
-    //new InsectReader(),
-    //new ArmorReader(),
+    new InsectReader(),
+    new ArmorReader(),
+    new PetalaceReader(),
 };
 
-var dataDump = new Dictionary<long, object>();
-
-// Ignore convert to LINQ
-foreach (var data in dataReaders.SelectMany(reader => reader.GetData()))
+DumpFiles("main", dataReaders);
+DumpFiles("decorations", new List<IDataReader>()
 {
-    dataDump.Add(data.Id, data);
-}
-
-var file = File.OpenWrite(FILE_PATH);
-JsonSerializer.Serialize(file, dataDump, new JsonSerializerOptions
-{
-    WriteIndented = true,
+    new DecorationReader(),
+    new RampageDecorationReader(),
 });
-file.Close();
 
-Console.WriteLine("File Written");
+static void DumpFiles(string fileName, IList<IDataReader> dataReaders)
+{
+    var fileBasePath = @"D:\mhrData\" + fileName;
+    var filePath = fileBasePath + ".json";
+    var filePathPretty = fileBasePath + "Pretty.json";
+    
+    File.Delete(filePath);
+    File.Delete(filePathPretty);
+    
+    var dataDump = new Dictionary<long, object>();
+    // Ignore convert to LINQ
+    foreach (var data in dataReaders.SelectMany(reader => reader.GetData()))
+    {
+        dataDump.Add(data.Id, data);
+    }
+
+    var file = File.OpenWrite(filePath);
+    JsonSerializer.Serialize(file, dataDump);
+    file.Close();
+
+    var filePretty = File.OpenWrite(filePathPretty);
+    JsonSerializer.Serialize(filePretty, dataDump, new JsonSerializerOptions
+    {
+        WriteIndented = true,
+    });
+    filePretty.Close();
+
+    Console.WriteLine($"'{fileName}': Files Written");
+}

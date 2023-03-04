@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 using JsonDumper.ExportData;
+using JsonDumper.ExportData.Traits;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Common.Models.List_Wrappers;
@@ -86,5 +87,23 @@ public static class ReaderHelper
         
         for (uint i = 0; i < slots[index].Value; i++)
             yield return slotSize;
+    }
+    
+    public static IEnumerable<Skill> ConvertSkill(ObservableCollection<DataSourceWrapper<byte>> skillId,
+        ObservableCollection<GenericWrapper<int>> skillLevel)
+    {
+        for (var i = 0; i < skillId.Count; i++)
+        {
+            var id = skillId[i].Value;
+            
+            if (id == 0)
+                continue;
+
+            yield return new Skill()
+            {
+                Id = id,
+                Level = skillLevel[i].Value,
+            };
+        }
     }
 }
