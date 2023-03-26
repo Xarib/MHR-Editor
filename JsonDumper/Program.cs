@@ -56,13 +56,17 @@ static void DumpFiles(string fileName, IList<IDataReader> dataReaders)
     }
 
     var file = File.OpenWrite(filePath);
-    JsonSerializer.Serialize(file, dataDump);
+    JsonSerializer.Serialize(file, dataDump, new JsonSerializerOptions()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    });
     file.Close();
 
     var filePretty = File.OpenWrite(filePathPretty);
     JsonSerializer.Serialize(filePretty, dataDump, new JsonSerializerOptions
     {
         WriteIndented = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     });
     filePretty.Close();
 
