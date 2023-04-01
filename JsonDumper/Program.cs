@@ -2,10 +2,12 @@
 
 using System.Text.Json;
 using JsonDumper.DataReader;
+using MHR_Editor.Common;
+using MHR_Editor.Common.Data;
 using MHR_Editor.Data;
 
-// This is a need hidden dependency
 Console.WriteLine("Start init...");
+// This is needed
 DataInit.Init();
 Console.WriteLine("Done init");
 
@@ -36,8 +38,13 @@ DumpFiles("main", dataReaders);
 DumpFiles("decorations", new List<IDataReader>()
 {
     new DecorationReader(),
+});
+DumpFiles("rampage_decorations", new List<IDataReader>()
+{
     new RampageDecorationReader(),
 });
+DumpSkillsNames("skill_names", DataHelper.SKILL_NAME_LOOKUP);
+DumpSkillsNames("rampage_skill_names", DataHelper.RAMPAGE_SKILL_NAME_LOOKUP);
 
 static void DumpFiles(string fileName, IList<IDataReader> dataReaders)
 {
@@ -71,4 +78,14 @@ static void DumpFiles(string fileName, IList<IDataReader> dataReaders)
     filePretty.Close();
 
     Console.WriteLine($"'{fileName}': Files Written");
+}
+
+static void DumpSkillsNames(string fileName, Dictionary<Global.LangIndex, Dictionary<uint, string>> names)
+{
+    var file = File.OpenWrite($@"D:\mhrData\{fileName}.json");
+    JsonSerializer.Serialize(file, names[Global.LangIndex.eng], new JsonSerializerOptions()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    });
+    file.Close();
 }
