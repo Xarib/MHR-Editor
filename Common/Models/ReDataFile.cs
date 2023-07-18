@@ -4,7 +4,7 @@ using System.Text;
 
 #pragma warning disable CS8618
 
-namespace MHR_Editor.Common.Models;
+namespace RE_Editor.Common.Models;
 
 public class ReDataFile {
     public Magic              magic;
@@ -14,7 +14,7 @@ public class ReDataFile {
     public List<UserDataInfo> userDataInfo; // String names of other files being referenced. MUST MATCH THE INNER ONE IN `RSZ`.
     public RSZ                rsz;
 
-    public static ReDataFile Read(string targetFile) {
+    public static ReDataFile Read(string targetFile, bool justReadHashes = false) {
         var       file   = new ReDataFile();
         using var reader = new BinaryReader(File.OpenRead(targetFile));
         file.magic         = (Magic) reader.ReadUInt32();
@@ -32,17 +32,17 @@ public class ReDataFile {
         }
 
         reader.BaseStream.Seek((long) dataOffset, SeekOrigin.Begin);
-        file.rsz = RSZ.Read(reader);
+        file.rsz = RSZ.Read(reader, justReadHashes);
 
         return file;
     }
 
-    public void Write(string targetFile, bool testWritePosition = false) {
+    public void Write(string targetFile, bool testWritePosition = false, bool forGp = true) {
         using var writer = new BinaryWriter(File.OpenWrite(targetFile), Encoding.Unicode);
-        Write(writer, testWritePosition);
+        Write(writer, testWritePosition, forGp);
     }
 
-    public void Write(BinaryWriter writer, bool testWritePosition = false) {
+    public void Write(BinaryWriter writer, bool testWritePosition = false, bool forGp = true) {
         writer.Write((uint) magic);
         writer.Write(resourceCount);
         writer.Write(userDataInfo.Count);
@@ -66,7 +66,7 @@ public class ReDataFile {
 
         var dataOffset = (ulong) writer.BaseStream.Position;
         writer.WriteValueAtOffset(dataOffset, dataOffsetPos);
-        rsz.Write(writer, dataOffset, testWritePosition);
+        rsz.Write(writer, dataOffset, testWritePosition, forGp);
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]

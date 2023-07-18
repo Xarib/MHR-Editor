@@ -3,13 +3,14 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<RootNamespace>RE_Editor.Tests</RootNamespace>
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1"/>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
 		<PackageReference Include="MSTest.TestAdapter" Version="3.0.2"/>
 		<PackageReference Include="MSTest.TestFramework" Version="3.0.2"/>
 		<PackageReference Include="coverlet.collector" Version="3.2.0">
@@ -21,6 +22,6 @@
 		<ProjectReference Include="..\Common\Common.csproj"/>
 		<ProjectReference Include="..\Generated\Generated.csproj"/>
 		<ProjectReference Include="..\Generator\Generator.csproj"/>
-		<ProjectReference Include="..\MHR-Editor.csproj"/>
+		<ProjectReference Include="..\RE-Editor.csproj"/>
 	</ItemGroup>
 </Project>

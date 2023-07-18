@@ -1,16 +1,21 @@
-using MHR_Editor.Generator;
+using RE_Editor.Generator;
 
-namespace Tests;
+namespace RE_Editor.Tests;
 
 [TestClass]
 public class TestGeneration {
     [TestMethod]
-    public void TestWithWhitelist() {
-        Program.Main(new[] {"useWhitelist", "dryRun"});
+    public void TestWhitelistGeneration() {
+        new GenerateFiles().Go(new[] {"useWhitelist", "dryRun"});
     }
 
     [TestMethod]
-    public void TestWithoutWhitelist() {
-        Program.Main(new[] {"dryRun"});
+    public void TestGreylistGeneration() {
+        new GenerateFiles().Go(new[] {"useGreylist", "dryRun"});
+    }
+
+    [TestMethod]
+    public void TestFullGeneration() {
+        new GenerateFiles().Go(new[] {"dryRun"});
     }
 }

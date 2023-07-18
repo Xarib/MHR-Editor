@@ -1,11 +1,14 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common.Models;
+using RE_Editor.Common.Structs;
 
-namespace MHR_Editor.Common;
+namespace RE_Editor.Common;
 
 public static class Extensions {
     private static readonly Dictionary<string, string> VIA_TYPE_NAME_LOOKUPS = new();
@@ -274,6 +277,38 @@ public static class Extensions {
         return list;
     }
 
+    /// <summary>
+    /// Made for reading 16 bytes of "data" for unknown underlying type.
+    /// </summary>
+    public static ObservableCollection<Vec4> ReadVec4Array(this BinaryReader reader) {
+        ObservableCollection<Vec4> v = new();
+        reader.BaseStream.Align(4);
+        var count = reader.ReadInt32();
+        if (count > 0) {
+            reader.BaseStream.Align(16);
+            for (var i = 0; i < count; i++) {
+                var vec4 = new Vec4();
+                vec4.Read(reader);
+                v.Add(vec4);
+            }
+        }
+        return v;
+    }
+
+    /// <summary>
+    /// Made for writing 16 bytes of "data" for unknown underlying type.
+    /// </summary>
+    public static void WriteVec4Array(this BinaryWriter writer, ObservableCollection<Vec4> v) {
+        writer.BaseStream.Align(4);
+        writer.Write(v.Count);
+        if (v.Count > 0) {
+            writer.BaseStream.Align(16);
+            foreach (var vec4 in v) {
+                vec4.Write(writer);
+            }
+        }
+    }
+
     public static void PadTill(this BinaryWriter writer, ulong targetPos) {
         while (writer.BaseStream.Position < (long) targetPos) {
             writer.Write((byte) 0);
@@ -301,8 +336,13 @@ public static class Extensions {
     }
 
     public static Dictionary<A, B> MergeDictionaries<A, B>(this IEnumerable<Dictionary<A, B>> dictionaries) where A : notnull {
-        return dictionaries.SelectMany(dict => dict)
-                           .ToDictionary(pair => pair.Key, pair => pair.Value);
+        var dictionary = new Dictionary<A, B>();
+        foreach (var dict in dictionaries) {
+            foreach (var pair in dict) {
+                dictionary[pair.Key] = pair.Value;
+            }
+        }
+        return dictionary;
     }
 
     public static Dictionary<A, Dictionary<B, C>> MergeDictionaries<A, B, C>(this IEnumerable<Dictionary<A, Dictionary<B, C>>> dictionaries) where A : notnull
@@ -346,7 +386,7 @@ public static class Extensions {
 
     public static string? GetViaType(this string name) {
         name = name.ToLower();
-        return VIA_TYPE_NAME_LOOKUPS.ContainsKey(name) ? VIA_TYPE_NAME_LOOKUPS[name] : null;
+        return VIA_TYPE_NAME_LOOKUPS.TryGetValue(name, out var value) ? value : null;
     }
 
     public static string ToUpperFirstLetter(this string source) {
@@ -356,6 +396,7 @@ public static class Extensions {
         return new(letters);
     }
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static string? ToConvertedTypeName(this string? source, bool fixTypos = false) {
         if (source == null) return null;
         var name = source.ToUpperFirstLetter()
@@ -374,7 +415,8 @@ public static class Extensions {
                || name.StartsWith("Snow_Bitset`")
                || name.StartsWith("Snow_ai_FieldGimmickIntersector_ArrayElement`")
                || name.StartsWith("Snow_enemy_aifsm_EnemyCheckThinkCounter`")
-               || name.StartsWith("Snow_enemy_EnemyConvertShellDataList`")) { // The 'array' field already covers this.
+               || name.StartsWith("Snow_enemy_EnemyConvertShellDataList`")
+               || name.Contains("[[")) { // The 'array' field already covers this.
             if (name.Contains("[[")) {
                 name = name.SubstringToEnd(name.LastIndexOf("[[", StringComparison.Ordinal) + 2, name.IndexOf(','))
                            .ToUpperFirstLetter();
@@ -383,6 +425,9 @@ public static class Extensions {
                            .ToUpperFirstLetter();
             }
         }
+
+        name = name.Replace('`', '_');
+
         Debug.Assert(!name.StartsWith("System_Collections"), source);
         Debug.Assert(!name.Contains('`'), source);
         Debug.Assert(!name.Contains('['), source);
